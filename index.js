@@ -3,6 +3,8 @@ const express = require("express");
 const app = express();
 
 require("./startup/routes")(app);
+require("./startup/prod")(app);
+
 
 const db = "mongodb+srv://admin:admin@mybackend.ld7vcw6.mongodb.net/mybackend";
 
