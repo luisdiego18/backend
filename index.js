@@ -5,8 +5,7 @@ const app = express();
 require("./startup/routes")(app);
 require("./startup/prod")(app);
 
-
-const db = "mongodb+srv://admin:admin@mybackend.ld7vcw6.mongodb.net/mybackend";
+const db = "mongodb+srv://*****:*****@mybackend.ld7vcw6.mongodb.net/mybackend";
 
 // Connectiong to mongodb localhost
 mongoose
