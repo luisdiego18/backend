@@ -10,8 +10,8 @@ if (!config.get("jwtPrivateKey")) {
 require("./startup/routes")(app);
 require("./startup/prod")(app);
 
-// const db = "mongodb+srv://admin:admin@mybackend.ld7vcw6.mongodb.net/mybackend";
-const db = "mongodb://localhost/mydatabase";
+const db = "mongodb+srv://admin:admin@mybackend.ld7vcw6.mongodb.net/mybackend";
+// const db = "mongodb://localhost/mydatabase";
 
 // Connectiong to mongodb localhost
 mongoose
