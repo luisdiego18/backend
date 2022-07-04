@@ -1,18 +1,19 @@
+const auth = require("../middleware/auth");
 const bcrypt = require("bcrypt");
 const _ = require("lodash");
 const { User, validate } = require("../models/user");
 const express = require("express");
 const router = express.Router();
 
-// GET
-router.get("/", async (req, res) => {
-  const users = await User.find().sort("name");
-  res.send(users);
+// GET/me
+router.get("/me", auth, async (req, res) => {
+  const user = await User.findById(req.user._id).select("-password");
+  res.send(user);
 });
 
 // POST
 router.post("/", async (req, res) => {
-  // validation
+  // Joi validation
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -28,8 +29,13 @@ router.post("/", async (req, res) => {
 
   await user.save();
 
-  // Lodash
-  res.send(_.pick(user, ["_id", "name", "email"]));
+  // JWT
+  const token = user.generateAuthToken();
+
+  // Setting Headers and Lodash
+  res
+    .header("x-auth-token", token)
+    .send(_.pick(user, ["_id", "name", "email"]));
 });
 
 module.exports = router;
