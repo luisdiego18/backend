@@ -11,11 +11,7 @@ if (!config.get("jwtPrivateKey")) {
 require("./startup/routes")(app);
 require("./startup/prod")(app);
 
-app.use(
-  cors({
-    origin: "*",
-  })
-);
+app.use(cors());
 
 const db = "mongodb+srv://admin:admin@mybackend.ld7vcw6.mongodb.net/mybackend";
 // const db = "mongodb://localhost/mydatabase";
