@@ -1,6 +1,7 @@
 const config = require("config");
 const mongoose = require("mongoose");
 const express = require("express");
+const cors = require("cors");
 const app = express();
 
 if (!config.get("jwtPrivateKey")) {
@@ -9,6 +10,12 @@ if (!config.get("jwtPrivateKey")) {
 
 require("./startup/routes")(app);
 require("./startup/prod")(app);
+
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
 const db = "mongodb+srv://admin:admin@mybackend.ld7vcw6.mongodb.net/mybackend";
 // const db = "mongodb://localhost/mydatabase";
