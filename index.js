@@ -4,13 +4,13 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 
-if (!config.get("jwtPrivateKey")) {
-  throw new Error("FATAL ERROR: jwtPrivateKey is not defined.");
-}
-
-require("./startup/routes")(app);
-require("./startup/prod")(app);
-
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Origin",
+    "Origin, X-Requested-with, Content-Type, Accept, Authorization"
+  );
+});
 app.use(
   cors({
     origin: "http://localhost:3000",
@@ -18,6 +18,13 @@ app.use(
     optionsSuccessStatus: 200,
   })
 );
+
+if (!config.get("jwtPrivateKey")) {
+  throw new Error("FATAL ERROR: jwtPrivateKey is not defined.");
+}
+
+require("./startup/routes")(app);
+require("./startup/prod")(app);
 
 const db = "mongodb+srv://admin:admin@mybackend.ld7vcw6.mongodb.net/mybackend";
 // const db = "mongodb://localhost/mydatabase";
